@@ -27,7 +27,6 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ./
           key: ${{ runner.os }}-cache
 
@@ -49,11 +48,6 @@ jobs:
           path: ./
           key: ${{ runner.os }}-cache
       - run: |
-          echo "installing SuiteCloud Development Framework from npm"
-          npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
-          echo "Authenticating"
-          cd src
-          suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:validate
           suitecloud project:deploy --dryrun
           suitecloud project:deploy --accountspecificvalues ERROR
