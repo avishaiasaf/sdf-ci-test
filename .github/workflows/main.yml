@@ -34,7 +34,7 @@ jobs:
           key: ${{ runner.os }}-cache
 
   validate:
-    name: Validate Deployment
+    name: Validate
     needs: install-dependencies
     runs-on: ubuntu-latest
     steps:
@@ -61,7 +61,7 @@ jobs:
           suitecloud project:deploy --dryrun
 
   dry-run:
-    name: Validate Deployment
+    name: Dry Run
     needs: validate
     runs-on: ubuntu-latest
     steps:
@@ -82,7 +82,7 @@ jobs:
           suitecloud project:deploy --dryrun
 
   deploy:
-    name: Validate Deployment
+    name: Deploy
     needs: dry-run
     runs-on: ubuntu-latest
     steps:
