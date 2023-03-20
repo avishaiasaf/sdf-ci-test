@@ -20,19 +20,18 @@ jobs:
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:adddependencies
 
-
   validate-deployment:
     name: Validate Deployment
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: |
           cd src
           suitecloud project:validate
           suitecloud project:deploy --dryrun
-          suitecloud project:deploy --accountspecificvalues ERROR
+          suitecloud project:<EUGPSCoordinates>ploy --accountspecificvalues ERROR
