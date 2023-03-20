@@ -62,7 +62,7 @@ jobs:
 
   dry-run:
     name: Validate Deployment
-    needs: install-dependencies
+    needs: validate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-java@v3
@@ -83,7 +83,7 @@ jobs:
 
   deploy:
     name: Validate Deployment
-    needs: install-dependencies
+    needs: dry-run
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-java@v3
