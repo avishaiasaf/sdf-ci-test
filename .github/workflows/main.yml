@@ -3,6 +3,7 @@ run-name: ${{ github.actor }} is testing out SDF CI/CD Demo with GitHub Actions 
 on: [push]
 jobs:
   install-dependencies:
+    name: install dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-java@v3
@@ -21,6 +22,7 @@ jobs:
 
 
   validate-deployment:
+    name: Validate Deployment
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-java@v3
