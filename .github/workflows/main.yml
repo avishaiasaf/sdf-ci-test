@@ -30,10 +30,7 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: |
-            ~/
-            ./
-            ../
+          path: ./
           key: ${{ runner.os }}-cache
 
   validate-deployment:
@@ -51,13 +48,15 @@ jobs:
         id: cache-npm
         uses: actions/cache/restore@v3
         with:
-          path:  |
-            ~/
-            ./
-            ../
+          path:  ./
           key: ${{ runner.os }}-cache
       - run: |
+          echo "installing SuiteCloud Development Framework from npm"
           npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+          echo "Authenticating"
+          cd src
+          suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
+          suitecloud project:adddependencies
           suitecloud project:validate
           suitecloud project:deploy --dryrun
           suitecloud project:deploy --accountspecificvalues ERROR
