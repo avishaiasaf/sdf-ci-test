@@ -30,7 +30,10 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: ./
+          path: |
+            ~/
+            ./
+            ../
           key: ${{ runner.os }}-cache
 
   validate-deployment:
@@ -48,7 +51,10 @@ jobs:
         id: cache-npm
         uses: actions/cache/restore@v3
         with:
-          path: ./
+          path:  |
+            ~/
+            ./
+            ../
           key: ${{ runner.os }}-cache
       - run: |
           npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
