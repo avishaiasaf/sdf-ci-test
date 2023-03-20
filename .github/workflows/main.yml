@@ -33,7 +33,7 @@ jobs:
           path: ./
           key: ${{ runner.os }}-cache
 
-  validate-deployment:
+  validate:
     name: Validate Deployment
     needs: install-dependencies
     runs-on: ubuntu-latest
@@ -50,6 +50,48 @@ jobs:
         with:
           path:  ./
           key: ${{ runner.os }}-cache
+      - run: |
+          echo "installing SuiteCloud Development Framework from npm"
+          npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+          echo "Authenticating"
+          cd src
+          suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
+          suitecloud project:adddependencies
+          suitecloud project:validate
+          suitecloud project:deploy --dryrun
+
+  dry-run:
+    name: Validate Deployment
+    needs: install-dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: |
+          echo "installing SuiteCloud Development Framework from npm"
+          npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+          echo "Authenticating"
+          cd src
+          suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
+          suitecloud project:adddependencies
+          suitecloud project:validate
+          suitecloud project:deploy --dryrun
+
+  deploy:
+    name: Validate Deployment
+    needs: install-dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Check out repository code
+        uses: actions/checkout@v2
       - run: |
           echo "installing SuiteCloud Development Framework from npm"
           npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli

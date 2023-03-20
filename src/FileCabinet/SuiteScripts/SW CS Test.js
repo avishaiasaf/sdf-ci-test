@@ -16,7 +16,7 @@ define([],
          * @since 2015.2
          */
         EntryPoints.beforeLoad = (scriptContext) => {
-            log.debug('Test', 'chache is working')
+            log.debug('Test', 'pipeline stages succeeded')
         }
 
         /**
