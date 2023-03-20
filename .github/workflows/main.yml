@@ -22,14 +22,14 @@ jobs:
           suitecloud project:adddependencies
 
       - name: Cache node modules
-          id: cache-npm
-          uses: actions/cache@v3
-          env:
-            cache-name: cache-node-modules
-          with:
-            # npm cache files are stored in `~/.npm` on Linux/macOS
-            path: ./
-            key: ${{ runner.os }}-cache
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ./
+          key: ${{ runner.os }}-cache
 
   validate-deployment:
     name: Validate Deployment
@@ -43,11 +43,11 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: Restore cached Primes
-          id: cache-npm
-          uses: actions/cache/restore@v3
-          with:
-            path: ./
-            key: ${{ runner.os }}-cache
+        id: cache-npm
+        uses: actions/cache/restore@v3
+        with:
+          path: ./
+          key: ${{ runner.os }}-cache
       - run: |
           echo "installing SuiteCloud Development Framework from npm"
           npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
