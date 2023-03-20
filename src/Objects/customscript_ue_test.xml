@@ -1,0 +1,13 @@
+<usereventscript scriptid="customscript_ue_test">
+    <name>Test UE</name>
+    <notifyowner>T</notifyowner>
+    <scriptfile>[/SuiteScripts/SW CS Test.js]</scriptfile>
+    <scriptdeployments>
+        <scriptdeployment scriptid="customdeploy_ue_test">
+            <isdeployed>T</isdeployed>
+            <loglevel>DEBUG</loglevel>
+            <recordtype>JOURNALENTRY</recordtype>
+            <status>TESTING</status>
+        </scriptdeployment>
+    </scriptdeployments>
+</usereventscript>
