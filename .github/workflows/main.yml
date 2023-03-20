@@ -21,13 +21,14 @@ jobs:
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:adddependencies
 
+      - run: pwd
       - name: Cache node modules
         id: cache-npm
         uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
-          path: ./
+          path: ../
           key: ${{ runner.os }}-cache
 
   validate-deployment:
@@ -45,7 +46,7 @@ jobs:
         id: cache-npm
         uses: actions/cache/restore@v3
         with:
-          path: ./
+          path: ../
           key: ${{ runner.os }}-cache
       - run: |
           suitecloud project:validate
