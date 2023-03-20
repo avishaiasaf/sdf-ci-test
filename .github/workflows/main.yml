@@ -12,10 +12,10 @@ jobs:
           java-version: '17'
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: echo "installing SuiteCloud Development Framework from npm"
-      - run: npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
-      - run: echo "Authenticating"
       - run: |
+          echo "installing SuiteCloud Development Framework from npm"
+          npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+          echo "Authenticating"
           cd src
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:adddependencies
@@ -32,7 +32,11 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: |
+          echo "installing SuiteCloud Development Framework from npm"
+          npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+          echo "Authenticating"
           cd src
+          suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:validate
           suitecloud project:deploy --dryrun
-          suitecloud project:<EUGPSCoordinates>ploy --accountspecificvalues ERROR
+          suitecloud project:deploy --accountspecificvalues ERROR
