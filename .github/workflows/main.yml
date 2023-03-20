@@ -35,9 +35,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - name: Download artifacts from installation step
-          uses: actions/download-artifact@v3
-          with:
-            name: sdf-config
+        uses: actions/download-artifact@v3
+        with:
+          name: sdf-config
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: |
