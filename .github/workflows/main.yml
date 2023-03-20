@@ -22,6 +22,7 @@ jobs:
 
   validate-deployment:
     name: Validate Deployment
+    needs: install-dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-java@v3
