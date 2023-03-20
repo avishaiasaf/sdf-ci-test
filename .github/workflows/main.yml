@@ -25,4 +25,4 @@ jobs:
           suitecloud project:adddependencies
           suitecloud project:validate
           suitecloud project:deploy --dryrun
-          suitecloud project:deploy --applyinstallprefs -v
+          suitecloud project:deploy --applyinstallprefs
