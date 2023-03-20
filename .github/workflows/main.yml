@@ -1,5 +1,5 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: SDF CI/CD Demo
+run-name: ${{ github.actor }} is testing out SDF CI/CD Demo with GitHub Actions 🚀
 on: [push]
 jobs:
   install-dependencies:
@@ -7,22 +7,30 @@ jobs:
     steps:
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
+          distribution: 'temurin'
           java-version: '17'
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: pwd
-      - run: ls
       - run: echo "installing SuiteCloud Development Framework from npm"
       - run: npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
       - run: echo "Authenticating"
       - run: |
-          pwd
           cd src
-          pwd
-          ls
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:adddependencies
-          suitecloud project:validate
-          suitecloud project:deploy --dryrun
-          suitecloud project:deploy --accountspecificvalues ERROR
+
+
+  validate-deployment:
+    runs-on: ubuntu-latest
+      steps:
+          - uses: actions/setup-java@v3
+          with:
+            distribution: 'temurin'
+            java-version: '17'
+          - name: Check out repository code
+            uses: actions/checkout@v2
+          - run: |
+              cd src
+              suitecloud project:validate
+              suitecloud project:deploy --dryrun
+              suitecloud project:deploy --accountspecificvalues ERROR
