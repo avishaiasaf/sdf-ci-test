@@ -5,6 +5,7 @@
 define([],
 
     () => {
+        const EntryPoints = {};
         /**
          * Defines the function definition that is executed before record is loaded.
          * @param {Object} scriptContext
@@ -14,7 +15,7 @@ define([],
          * @param {ServletRequest} scriptContext.request - HTTP request information sent from the browser for a client action only.
          * @since 2015.2
          */
-        const beforeLoad = (scriptContext) => {
+        EntryPoints.beforeLoad = (scriptContext) => {
             log.debug('Test')
         }
 
@@ -26,7 +27,7 @@ define([],
          * @param {string} scriptContext.type - Trigger type; use values from the context.UserEventType enum
          * @since 2015.2
          */
-        const beforeSubmit = (scriptContext) => {
+        EntryPoints.beforeSubmit = (scriptContext) => {
 
         }
 
@@ -38,10 +39,10 @@ define([],
          * @param {string} scriptContext.type - Trigger type; use values from the context.UserEventType enum
          * @since 2015.2
          */
-        const afterSubmit = (scriptContext) => {
+        EntryPoints.afterSubmit = (scriptContext) => {
 
         }
 
-        return {beforeLoad, beforeSubmit, afterSubmit}
+        return EntryPoints
 
     });
