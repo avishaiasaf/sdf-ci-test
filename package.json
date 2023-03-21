@@ -5,7 +5,7 @@
   "main": "suitecloud.config.js",
   "scripts": {
     "test": "jest",
-    "deployfile": "node ci/deploy.js $(git diff --name-only --diff-filter=d)"
+    "deployfile": "node deploy.js $(git diff --name-only --diff-filter=d)"
   },
   "repository": {
     "type": "git",
