@@ -26,8 +26,8 @@ jobs:
           # checkout full tree
           fetch-depth: 0
       - run: |
-          git diff -z --name-only ${{github.event.before}} ${{github.sha}} | sed ‘s/.*/"&"/’
-          node deploy.js $(git diff -z --name-only ${{github.event.before}} ${{github.sha}} | sed ‘s/.*/"&"/’)
+          git diff -z --name-only ${{github.event.before}} ${{github.sha}} | while IFS= read -r n; do dirname "$n"; done
+          node deploy.js $(git diff -z --name-only ${{github.event.before}} ${{github.sha}} | while IFS= read -r n; do dirname "$n"; done )
 
       - run: |
           pwd
