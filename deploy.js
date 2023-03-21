@@ -17,19 +17,19 @@ function createDeployFile(filesToDeploy) {
     const filesMarkup = filesToDeploy.filter((file) => file.type === "js").map((file) => file.path);
     const objectsMarkup = filesToDeploy.filter((file) => file.type === "xml").map((file) => file.path);
     const deployContent = `<deploy>
-  <configuration>
-      <path>~/AccountConfiguration/*</path>
-  </configuration>
-  <files>
-      ${filesMarkup.join("")}
-  </files>
-  <objects>
-      ${objectsMarkup.join("")}
-  </objects>
-  <translationimports>
-      <path>~/Translations/*</path>
-  </translationimports>
-</deploy>`;
+                              <configuration>
+                                  <path>~/AccountConfiguration/*</path>
+                              </configuration>
+                              <files>
+                                  ${filesMarkup.join("")}
+                              </files>
+                              <objects>
+                                  ${objectsMarkup.join("")}
+                              </objects>
+                              <translationimports>
+                                  <path>~/Translations/*</path>
+                              </translationimports>
+                            </deploy>`;
 
     fs.writeFile(`src/deploy.xml`, deployContent, "utf8", (err) => {
         if (err) throw err;
@@ -40,7 +40,8 @@ function createDeployFile(filesToDeploy) {
 let filesToDeploy = [];
 
 try {
-    const [, , ...modifiedScripts] = process.argv;
+    let [, , modifiedScripts] = process.argv;
+    modifiedScripts = modifiedScripts.split('\n');
     console.log("modified scripts: ", modifiedScripts);
 
     filesToDeploy = deployPathsPrep(modifiedScripts);
