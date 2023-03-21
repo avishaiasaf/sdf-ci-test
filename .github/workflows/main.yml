@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
       - run: |
           git diff ${{github.event.before}} ${{github.sha}}
-          npm run deployfile
+          node deploy.js $(${{github.event.before}} ${{github.sha}})
 
       - run: |
           pwd
