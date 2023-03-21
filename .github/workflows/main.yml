@@ -20,6 +20,7 @@ jobs:
           cd src
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:adddependencies
+          npm run deployfile
 
       - run: |
           pwd
@@ -58,7 +59,6 @@ jobs:
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:adddependencies
           suitecloud project:validate
-          suitecloud project:deploy --dryrun
 
   dry-run:
     name: Dry Run
@@ -78,7 +78,6 @@ jobs:
           cd src
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:adddependencies
-          suitecloud project:validate
           suitecloud project:deploy --dryrun
 
   deploy:
@@ -99,6 +98,4 @@ jobs:
           cd src
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:adddependencies
-          suitecloud project:validate
-          suitecloud project:deploy --dryrun
           suitecloud project:deploy --accountspecificvalues ERROR

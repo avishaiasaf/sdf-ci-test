@@ -1,0 +1,24 @@
+{
+  "name": "pipeline-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "suitecloud.config.js",
+  "scripts": {
+    "test": "jest",
+    "deployfile": "node ci/deploy.js $(git diff --name-only --diff-filter=d)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avishaiasaf/sdf-ci-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avishaiasaf/sdf-ci-test/issues"
+  },
+  "homepage": "https://github.com/avishaiasaf/sdf-ci-test#readme",
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
