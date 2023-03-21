@@ -21,6 +21,12 @@ jobs:
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:adddependencies
           ls
+      - uses: actions/checkout@v2
+        with:
+          # checkout full tree
+          fetch-depth: 0
+      - run: |
+          git diff ${{github.event.before}} ${{github.sha}}
           npm run deployfile
 
       - run: |
