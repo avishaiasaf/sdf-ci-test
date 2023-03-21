@@ -26,8 +26,8 @@ jobs:
           # checkout full tree
           fetch-depth: 0
       - run: |
-          git diff -z --name-only ${{github.event.before}} ${{github.sha}} | xargs -d '\n' -I {} echo "{}"
-          node deploy.js $(git diff -z --name-only ${{github.event.before}} ${{github.sha}} | xargs -d '\n' -I {} echo "{}")
+          git diff -z --name-only ${{github.event.before}} ${{github.sha}}
+          node deploy.js $(git diff -z --name-only ${{github.event.before}} ${{github.sha}})
 
       - run: |
           pwd
