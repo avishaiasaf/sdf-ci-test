@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 function deployPathsPrep(modifiedFilePaths) {
     console.log("running deploy prep");
     const onlyNsFiles = modifiedFilePaths.filter(
@@ -29,7 +31,7 @@ function createDeployFile(filesToDeploy) {
   </translationimports>
 </deploy>`;
 
-    writeFile(`src/deploy.xml`, deployContent, "utf8", (err) => {
+    fs.writeFile(`src/deploy.xml`, deployContent, "utf8", (err) => {
         if (err) throw err;
         console.log(`created deploy.xml file...${deployContent}`);
     });
