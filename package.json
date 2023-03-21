@@ -5,7 +5,7 @@
   "main": "suitecloud.config.js",
   "scripts": {
     "test": "jest",
-    "deployfile": "node deploy.js $(git diff --name-only origin/main origin/${GITHUB_HEAD_REF})"
+    "deployfile": "node deploy.js $(git diff --name-only HEAD HEAD^ )"
   },
   "repository": {
     "type": "git",
