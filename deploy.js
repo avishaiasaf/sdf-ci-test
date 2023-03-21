@@ -41,9 +41,9 @@ let filesToDeploy = [];
 
 try {
     let [, , modifiedScripts] = process.argv;
-    console.log("modified scripts before split: ", modifiedScripts);
-    console.log("process.argv: ", process.argv);
-    modifiedScripts = modifiedScripts.split('\n');
+    // console.log("modified scripts before split: ", modifiedScripts);
+    // console.log("process.argv: ", process.argv);
+    // modifiedScripts = modifiedScripts.split('\n');
     console.log("modified scripts: ", modifiedScripts);
 
     filesToDeploy = deployPathsPrep(modifiedScripts);
