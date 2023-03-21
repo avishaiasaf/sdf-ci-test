@@ -26,7 +26,10 @@ jobs:
           # checkout full tree
           fetch-depth: 0
       - run: |
-          git diff -z --name-only "${{github.event.before}}" "${{github.sha}}"
+          git diff -z --name-only ${{github.event.before}} ${{github.sha}} | while read file; do
+            # process each file here
+            echo "$file"
+          done
           node deploy.js $(git diff -z --name-only ${{github.event.before}} ${{github.sha}} | while IFS= read -r n; do dirname "$n"; done )
 
       - run: |
