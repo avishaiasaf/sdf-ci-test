@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 function deployPathsPrep(modifiedFilePaths) {
-    console.log("running deploy prep");
+    console.log("running deploy prep", modifiedFilePaths);
     const onlyNsFiles = modifiedFilePaths.filter(
         (filePath) => filePath.includes("/SuiteScripts/") || filePath.includes("/Objects/")
     );
@@ -40,7 +40,7 @@ function createDeployFile(filesToDeploy) {
 let filesToDeploy = [];
 
 try {
-    let [, , modifiedScripts] = process.argv;
+    const [, , modifiedScripts] = process.argv;
     // console.log("modified scripts before split: ", modifiedScripts);
     // console.log("process.argv: ", process.argv);
     // modifiedScripts = modifiedScripts.split('\n');
