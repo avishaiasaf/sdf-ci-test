@@ -21,7 +21,7 @@ jobs:
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           suitecloud project:adddependencies
           npm i --save-dev jest
-          jest
+          npm run jest
 
       - uses: actions/checkout@v2
         with:
