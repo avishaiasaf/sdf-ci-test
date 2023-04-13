@@ -11,8 +11,28 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Cache node modules
+          id: cache-npm
+          uses: actions/cache@v3
+          env:
+            cache-name: cache-node-modules
+          with:
+            # npm cache files are stored in `~/.npm` on Linux/macOS
+            path: ~/.npm
+            key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-build-${{ env.cache-name }}-
+              ${{ runner.os }}-build-
+              ${{ runner.os }}-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
       - name: Check out repository code
         uses: actions/checkout@v2
+
       - run: |
           echo "installing SuiteCloud Development Framework from npm"
           npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
@@ -34,14 +54,6 @@ jobs:
       - run: |
           pwd
           ls
-      - name: Cache node modules
-        id: cache-npm
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ./
-          key: ${{ runner.os }}-cache
 
   validate:
     name: Validate
@@ -58,15 +70,15 @@ jobs:
         id: cache-npm
         uses: actions/cache/restore@v3
         with:
-          path:  ./
-          key: ${{ runner.os }}-cache
+          path:  ~/.npm
+          key: $${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
       - run: |
-          echo "installing SuiteCloud Development Framework from npm"
-          npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
-          echo "Authenticating"
-          cd src
-          suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
-          suitecloud project:adddependencies
+#          echo "installing SuiteCloud Development Framework from npm"
+#          npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+#          echo "Authenticating"
+#          cd src
+#          suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
+#          suitecloud project:adddependencies
           suitecloud project:validate
 
   dry-run:
