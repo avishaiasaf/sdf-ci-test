@@ -1,9 +1,8 @@
 name: SDF CI/CD Demo
-run-name: ${{ github.actor }} is testing out SDF CI/CD Demo with GitHub Actions 🚀
 on: [push]
 jobs:
   install-dependencies:
-    name: install dependencies
+    name: Install dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-java@v3
@@ -19,7 +18,7 @@ jobs:
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
-          key: ${{ runner.os }}-cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
@@ -66,19 +65,13 @@ jobs:
           java-version: '17'
       - name: Check out repository code
         uses: actions/checkout@v2
-      - name: Restore cached Primes
+      - name: Restore cached node modules
         id: cache-npm
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
-          path:  ~/.npm
-          key: ${{ runner.os }}-cache
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
       - run: |
-#          echo "installing SuiteCloud Development Framework from npm"
-#          npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
-#          echo "Authenticating"
-#          cd src
-#          suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
-#          suitecloud project:adddependencies
           suitecloud project:validate
 
   dry-run:
