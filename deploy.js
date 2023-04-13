@@ -44,9 +44,10 @@ try {
     // console.log("modified scripts before split: ", modifiedScripts);
     // console.log("process.argv: ", process.argv);
     // modifiedScripts = modifiedScripts.split('\n');
-    console.log("modified scripts: ", modifiedScripts.split(','));
+    const splittedModifiedScripts = modifiedScripts.split(',').slice(0,-1)
+    console.log("modified scripts: ", splittedModifiedScripts);
 
-    filesToDeploy = deployPathsPrep(modifiedScripts.split(',').slice(0,-1));
+    filesToDeploy = deployPathsPrep(splittedModifiedScripts);
     console.log("filesToDeploy: ", filesToDeploy);
 
     if (!filesToDeploy.length) {
@@ -54,7 +55,7 @@ try {
         process.exit(0);
     }
 
-    filesToDeploy = deployPathsPrep(modifiedScripts);
+    filesToDeploy = deployPathsPrep(splittedModifiedScripts);
     createDeployFile(filesToDeploy);
 } catch (err) {
     console.error("Something went wrong creating deploy file holmes: ", err);
