@@ -47,8 +47,9 @@ jobs:
           # checkout full tree
           fetch-depth: 0
       - run: |
-          git diff --name-only --diff-filter=d ${{github.event.before}} ${{github.sha}}
-          node deploy.js $(git diff --name-only --diff-filter=d ${{github.event.before}} ${{github.sha}})
+          git diff --name-only --diff-filter=d ${{github.event.before}} ${{github.sha}} | xargs -d '\n' printf "%s," | xargs -I {} node deploy.js {}
+#          git diff --name-only --diff-filter=d ${{github.event.before}} ${{github.sha}}
+#          node deploy.js $(git diff --name-only --diff-filter=d ${{github.event.before}} ${{github.sha}})
 
       - run: |
           pwd
