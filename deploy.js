@@ -44,9 +44,9 @@ try {
     // console.log("modified scripts before split: ", modifiedScripts);
     // console.log("process.argv: ", process.argv);
     // modifiedScripts = modifiedScripts.split('\n');
-    console.log("modified scripts: ", modifiedScripts);
+    console.log("modified scripts: ", modifiedScripts.split(','));
 
-    filesToDeploy = deployPathsPrep(modifiedScripts);
+    filesToDeploy = deployPathsPrep(modifiedScripts.split(',').slice(0,-1));
     console.log("filesToDeploy: ", filesToDeploy);
 
     if (!filesToDeploy.length) {
