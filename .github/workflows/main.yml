@@ -35,6 +35,8 @@ jobs:
       - run: |
           echo "installing SuiteCloud Development Framework from npm"
           npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+          echo "Adding SuiteCloud CLI to the PATH"
+          echo "$(npm bin -g)" >> $GITHUB_PATH
           echo "Authenticating"
           cd src
           suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
