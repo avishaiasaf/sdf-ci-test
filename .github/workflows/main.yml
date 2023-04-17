@@ -32,15 +32,27 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
+#      - run: |
+#          echo "installing SuiteCloud Development Framework from npm"
+#          npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+#          echo "Authenticating"
+#          cd src
+#          npx suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
+#          npx suitecloud project:adddependencies
+#          npm i --save-dev jest
+#          npm run test
+
       - run: |
           echo "installing SuiteCloud Development Framework from npm"
           npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+          SUITECLOUD_CLI_PATH=$(npm list -g --depth=0 --parseable | grep 'suitecloud-cli$')
           echo "Authenticating"
           cd src
-          npx suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
-          npx suitecloud project:adddependencies
+          $SUITECLOUD_CLI_PATH/node_modules/.bin/suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
+          $SUITECLOUD_CLI_PATH/node_modules/.bin/suitecloud project:adddependencies
           npm i --save-dev jest
           npm run test
+
 
       - uses: actions/checkout@v2
         with:
