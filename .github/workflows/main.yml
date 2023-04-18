@@ -87,14 +87,13 @@ jobs:
 
       - name: Install SuiteCloud CLI
         run: |
-          npm install --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+          node installsdf
 
       - name: Authenticate and add dependencies using SuiteCloud
         run: |
           echo "Authenticating"
           cd src
-          npx @oracle/suitecloud-cli account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
-          npx @oracle/suitecloud-cli project:adddependencies
+          node sdfauth
 
       - name: Checkout full tree
         uses: actions/checkout@v2
@@ -103,8 +102,7 @@ jobs:
 
       - name: Get changed files and run deploy script
         run: |
-          changed_files=$(git diff --name-only --diff-filter=d ${{github.event.before}} ${{github.sha}} | xargs -d '\n' printf "%s," )
-          node deploy.js $changed_files
+          node deployfile
 
   validate:
     name: Validate
@@ -129,7 +127,8 @@ jobs:
 
       - name: Run SuiteCloud project validation
         run: |
-          npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+          node installsdf
+          node sdfauth
           suitecloud project:validate
 
 

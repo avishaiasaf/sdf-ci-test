@@ -5,7 +5,11 @@
   "main": "suitecloud.config.js",
   "scripts": {
     "test": "jest",
-    "deployfile": "node deploy.js $(git diff --name-only origin/main HEAD HEAD^ )"
+    "deployfile": "changed_files=$(git diff --name-only --diff-filter=d ${{github.event.before}} ${{github.sha}} | xargs -d '\\n' printf \"%s,\" )\n          node deploy.js $changed_files",
+    "sdfauth": "npx suitecloud account:savetoken --account ${{ secrets.REALM }} --authid \"cisdf\" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}",
+    "installsdf": "npm install -g --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli",
+    "sdfdeploy": "node sdfauth && suitecloud project:adddependencies && suitecloud project:validate --server && suitecloud project:deploy",
+    "sdfdryrun": "node sdfauth && suitecloud project:adddependencies && suitecloud project:validate --server && suitecloud project:deploy --dryrun"
   },
   "repository": {
     "type": "git",
