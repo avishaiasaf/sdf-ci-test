@@ -133,7 +133,7 @@ jobs:
 
       - name: Run SuiteCloud project validation
         run: |
-          npx --package=@oracle/suitecloud-cli suitecloud project:validate
+          npx suitecloud project:validate
 
 
 #  validate:
