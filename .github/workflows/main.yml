@@ -110,27 +110,51 @@ jobs:
           changed_files=$(git diff --name-only --diff-filter=d ${{github.event.before}} ${{github.sha}} | xargs -d '\n' printf "%s," )
           node deploy.js $changed_files
 
-
-
   validate:
     name: Validate
     needs: install-dependencies
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-java@v3
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Check out repository code
-        uses: actions/checkout@v2
+
       - name: Restore cached node modules
         id: cache-npm
         uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}
-      - run: |
-          suitecloud project:validate
+
+      - name: Run SuiteCloud project validation
+        run: |
+          npx --package=@oracle/suitecloud-cli suitecloud project:validate
+
+
+#  validate:
+#    name: Validate
+#    needs: install-dependencies
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: '17'
+#      - name: Check out repository code
+#        uses: actions/checkout@v2
+#      - name: Restore cached node modules
+#        id: cache-npm
+#        uses: actions/cache@v3
+#        with:
+#          path: ~/.npm
+#          key: ${{ runner.os }}-build-${{ env.cache-name }}
+#      - run: |
+#          suitecloud project:validate
 
   dry-run:
     name: Dry Run
