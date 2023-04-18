@@ -129,7 +129,8 @@ jobs:
 
       - name: Run SuiteCloud project validation
         run: |
-          npx @oracle/suitecloud-cli project:validate
+          npm install --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
+          suitecloud-cli project:validate
 
 
 
