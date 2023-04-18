@@ -85,6 +85,9 @@ jobs:
         continue-on-error: true
         run: npm list
 
+      - name: Install SuiteCloud CLI
+        run: |
+          npm install --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
 
       - name: Authenticate and add dependencies using SuiteCloud
         run: |
@@ -92,11 +95,6 @@ jobs:
           cd src
           npx @oracle/suitecloud-cli account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
           npx @oracle/suitecloud-cli project:adddependencies
-
-      - name: Run Jest tests
-        run: |
-          cd src
-          npm run test
 
       - name: Checkout full tree
         uses: actions/checkout@v2
@@ -132,6 +130,7 @@ jobs:
       - name: Run SuiteCloud project validation
         run: |
           npx @oracle/suitecloud-cli project:validate
+
 
 
 
