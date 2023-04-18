@@ -85,20 +85,19 @@ jobs:
         continue-on-error: true
         run: npm list
 
-      - name: Install dependencies
+      - name: Install SuiteCloud Development Framework and authenticate
         run: |
-          npm ci
-
-      - name: Authenticate and add dependencies using SuiteCloud
-        run: |
+          echo "Installing SuiteCloud Development Framework from npm"
+          npm install --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
           echo "Authenticating"
           cd src
-          npx suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
-          npx suitecloud project:adddependencies
+          npx --package=@oracle/suitecloud-cli suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
+          npx --package=@oracle/suitecloud-cli suitecloud project:adddependencies
 
-      - name: Run Jest tests
+      - name: Install Jest and run tests
         run: |
           cd src
+          npm i --save-dev jest
           npm run test
 
       - name: Checkout full tree
@@ -134,7 +133,7 @@ jobs:
 
       - name: Run SuiteCloud project validation
         run: |
-          npx suitecloud project:validate
+          npx --package=@oracle/suitecloud-cli suitecloud project:validate
 
 
 #  validate:
