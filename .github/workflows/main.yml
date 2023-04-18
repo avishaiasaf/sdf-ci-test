@@ -45,14 +45,15 @@ jobs:
       - run: |
           echo "installing SuiteCloud Development Framework from npm"
           npm install --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
-          echo "Locating SuiteCloud CLI executable"
-          SUITECLOUD_CLI_EXEC=$(find ./node_modules -type f -name suitecloud)
+          echo "Locating SuiteCloud CLI package folder"
+          SUITECLOUD_CLI_PATH=$(npm list --depth=0 --parseable | grep 'suitecloud-cli$')
           echo "Authenticating"
           cd src
-          $SUITECLOUD_CLI_EXEC account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
-          $SUITECLOUD_CLI_EXEC project:adddependencies
+          node $SUITECLOUD_CLI_PATH/bin/suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
+          node $SUITECLOUD_CLI_PATH/bin/suitecloud project:adddependencies
           npm i --save-dev jest
           npm run test
+
 
 
 
