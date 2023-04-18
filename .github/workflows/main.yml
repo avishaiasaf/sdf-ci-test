@@ -89,12 +89,10 @@ jobs:
         run: |
           echo "Installing SuiteCloud Development Framework from npm"
           npm install --acceptSuiteCloudSDKLicense @oracle/suitecloud-cli
-          echo "Locating SuiteCloud CLI package folder"
-          SUITECLOUD_CLI_PATH=$(npm list --depth=0 --parseable | grep 'suitecloud-cli$')
           echo "Authenticating"
           cd src
-          node $SUITECLOUD_CLI_PATH/bin/suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
-          node $SUITECLOUD_CLI_PATH/bin/suitecloud project:adddependencies
+          npx --package=@oracle/suitecloud-cli suitecloud account:savetoken --account ${{ secrets.REALM }} --authid "cisdf" --tokenid ${{ secrets.TOKEN_ID }} --tokensecret ${{ secrets.TOKEN_SECRET }}
+          npx --package=@oracle/suitecloud-cli suitecloud project:adddependencies
 
       - name: Install Jest and run tests
         run: |
@@ -111,6 +109,7 @@ jobs:
         run: |
           changed_files=$(git diff --name-only --diff-filter=d ${{github.event.before}} ${{github.sha}} | xargs -d '\n' printf "%s," )
           node deploy.js $changed_files
+
 
 
   validate:
