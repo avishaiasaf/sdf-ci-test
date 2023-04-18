@@ -17,7 +17,7 @@ define([],
          */
         EntryPoints.beforeLoad = (scriptContext) => {
             log.debug('Test', 'pipeline stages succeeded');
-            log.debug('Test', 'deploy file 44');
+            log.debug('Test', 'deploy file 45');
         }
 
         /**

@@ -85,9 +85,6 @@ jobs:
         continue-on-error: true
         run: npm list
 
-      - name: Install dependencies
-        run: |
-          npm ci
 
       - name: Authenticate and add dependencies using SuiteCloud
         run: |
